@@ -32,8 +32,9 @@ delete '/employee/:id' do
   employee.destroy!
 end
 
-put '/employee/:id' do
+patch '/employee/:id' do
   payload = JSON.parse(request.body.read)
-  employee = Employee.find(params["id"]).update(payload)
+  employee = Employee.find(params["id"])
+  employee.update(payload)
   employee.to_json
 end
