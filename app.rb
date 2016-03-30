@@ -26,3 +26,8 @@ post '/employee' do
   employee = Employee.create(payload)
   employee.to_json
 end
+
+delete '/employee/:id' do
+  employee = Employee.find(params["id"])
+  employee.destroy!
+end

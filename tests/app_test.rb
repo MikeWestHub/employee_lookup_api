@@ -34,6 +34,13 @@ class AppTest < Minitest::Unit::TestCase
     new_employee = JSON.parse(response.body)
     assert_equal "bob", new_employee["name"]
   end
+
+  def test_can_delete_employee
+    new_employee = Employee.create!(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
+    delete "/employee/#{new_employee.id}"
+    response = last_response.body
+    assert_equal "", response
+  end
   # def test_it_says_hello_world
   #   get '/'
   #   assert last_response.ok?
