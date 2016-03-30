@@ -36,10 +36,18 @@ class AppTest < Minitest::Unit::TestCase
   end
 
   def test_can_delete_employee
-    new_employee = Employee.create!(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
+    new_employee = Employee.create(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
     delete "/employee/#{new_employee.id}"
     response = last_response.body
     assert_equal "", response
+  end
+
+  def test_can_change_employees_name
+    new_employee = Employee.create!(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
+    hash = { name: "Mike" }
+    response = put("/employee/#{new_employee.id}", hash.to_json)
+    name_change = JSON.parse(response.body)
+    assert_equal "Mike", name_change["name"]
   end
   # def test_it_says_hello_world
   #   get '/'
